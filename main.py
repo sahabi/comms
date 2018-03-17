@@ -110,7 +110,6 @@ def get_moves(content, index):
             tmp = mk_moves(line,index)
             if tmp not in moves:
                 moves.append(tmp)
-    print moves
     moves = map(moves_return,moves)
     return moves
 
@@ -126,13 +125,14 @@ c_content = map(lambda x: x[1:], list(filter(lambda x: x[0] == 'c',content)))
 m_content = map(lambda x: x[1:], list(filter(lambda x: x[0] == 'o',content)))
 tau_content = map(lambda x: x[1:], list(filter(lambda x: x[0] == 'tau',content)))
 ctrl_ids = get_ctrl_ids(c_content)
+
 for i in ctrl_ids:
     cs = get_comms(c_content,i)
-    ms = get_moves(m_content,i)
-    ctrl = tpl.render(ctrl_name="Controller{}".format(i), commsifs=cs, moveifs=ms)
-    text_file = open("ctrl{}.py".format(i), "w")
+    cs = list(set(cs))
+    ms = get_moves(tau_content,i)
+    ms = list(set(ms))
+    ctrl = tpl.render(ctrl_name="Controller_{}".format(i), commsifs=cs, moveifs=ms)
+    text_file = open("ctrl_{}.py".format(i), "w")
     text_file.write(ctrl)
     text_file.close()
-
-
 

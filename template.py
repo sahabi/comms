@@ -1,5 +1,5 @@
 class {{ctrl_name}}:
-    
+
     def __init__(self):
         self.state = 0
 
@@ -12,6 +12,6 @@ class {{ctrl_name}}:
     def move(self, i, c):
         {% for ifstat in moveifs %}
         if self.state == {{ifstat.state}} and i == {{ifstat.i}} and c == {{ifstat.c}}:
-            self.state = {{ifstat.nstate}}
+            self.state = {{ifstat.ns}}
             return {{ifstat.o}}
         {% endfor %}

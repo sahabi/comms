@@ -68,8 +68,12 @@ def mk_comms(line, i):
     return Comms(s=int(line[1][1]),t=int(line[2][1]),n=i, b=int(line[3]))
 
 def mk_moves(line, i):
-    return Moves(s=int(line[1][1]),n=i, i=int(line[2][1]),
-            c=int(line[3][1]),ns=int(line[4][1]))
+    if line[2] != "":
+        return Moves(s=int(line[1][1]),n=i, i=int(line[2][1]),
+                c=int(line[3][1]),ns=int(line[4][1]))
+    else:
+        return Moves(s=int(line[1][1]),n=i, i=None,
+                c=int(line[3][1]),ns=int(line[4][1]))
 
 def comms_return(comms):
     lst = []
@@ -118,7 +122,7 @@ def split_(lst):
 
 env = Environment(loader=FileSystemLoader("./"))
 tpl =  env.get_template('template.py')
-f = "sample_synth_output.txt"
+f = "sample_uav_plan.txt"
 content = map(split_,open(f).readlines())
 
 c_content = map(lambda x: x[1:], list(filter(lambda x: x[0] == 'c',content)))
